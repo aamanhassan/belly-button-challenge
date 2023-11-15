@@ -99,6 +99,11 @@ d3.json(url).then(function(data){
 
     
 })
+}
+
+function optionChanged(newSample){
+    buildCharts(newSample);
+    buildMetadata(newSample);
 
 }
 init();

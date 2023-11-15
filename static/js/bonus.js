@@ -9,7 +9,8 @@ function buildGauge(wfreq){
     let mainPath = "M-.0 -0.05 L .0 0.05 L";
     let pathX = String(x);
     let space = " ";
-    let pathY = " Z";
+    let pathY = String(y);
+    let pathEnd = " Z";
     let path = mainPath.concat(pathX, space, pathY, pathEnd);
 
     let data = [
