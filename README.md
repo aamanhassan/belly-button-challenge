@@ -28,6 +28,10 @@ Use otu_ids for the marker colors.
 
 Use otu_labels for the text values.
 
+# Created a Gauge chart 
+
+Created a Guage chart as a bonus activity showing Belly Button Washing Frequency
+
 # Displayed the demographic information
 
 Displayed the sample metadata, i.e., an individual's demographic information.
