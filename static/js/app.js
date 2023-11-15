@@ -1,3 +1,83 @@
+
+
+function buildCharts(sample){
+    let url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json"
+    
+    d3.json(url).then(function(data){
+        let samples = data.samples;
+        let resultArray = samples.filter((sampleDictionary)=> sampleDictionary.id == sample);
+        let result = resultArray[0];
+
+        let otuIDs = result.otu_ids;
+        let otuLabels = result.otu_labels;
+        let sampleValues = result.sample_values;
+
+        let bubleLayout = {
+            title : "Bacteria Culture Per Sample",
+            margin : {t:0},
+            hovermode : "closest",
+            xaxis : {title : "OTU ID"},
+            margin : {t:30}
+        }
+
+        let bubbleData = [
+            {
+                x: otuIDs,
+                y: sampleValues,
+                text : otuLabels,
+                mode: "markers",
+                marker : {
+                    size: sampleValues,
+                    color: otuIDs,
+                    colorscale : "Earth"
+
+                }
+            }
+        ]
+        Plotly.newPlot("bubble",bubbleData,bubleLayout)
+
+        let yticks = otuIDs.slice(0,10).map(otuIDs => `OTU ${otuIDs}`).reverse();
+        let barData = [
+            {
+                y:yticks,
+                x: sampleValues.slice(0,10).reverse(),
+                text:otuLabels.slice(0,10).reverse(),
+                type:"bar",
+                orientation: "h"
+
+            }
+        ]
+
+        let barLayout = {
+            title:"Top Ten Bacteria Cultures Found",
+            margin: {t:30, l:150}
+        }
+        Plotly.newPlot("bar",barData,barLayout)
+
+    })
+}
+
+function buildMetadata(sample){
+    let url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json"
+
+    d3.json(url).then(function(data){
+        let metadata = data.metadata;
+        let resultArray = metadata.filter((sampleDictionary)=> sampleDictionary.id == sample);
+        let result = resultArray[0];
+        let PANEL = d3.select("#sample-metadata")
+
+        PANEL.html("");
+        for (key in result){
+            PANEL.append("h6").text(`${key.toUpperCase()}:${result[key]}`)
+        }
+
+        // Bonus
+        buildGauge(result.wfreq);
+
+    })
+
+}
+
 function init(){
 
 
@@ -12,6 +92,12 @@ d3.json(url).then(function(data){
     for (let i = 0; i < sampleNames.length; i++) {
         selector.append("option").text(sampleNames[i]).property("value",sampleNames[i]);
     }
+
+    let firstSample = sampleNames[0];
+    buildCharts(firstSample);
+    buildMetadata(firstSample);
+
+    
 })
 
 }
