@@ -63,7 +63,7 @@ function buildGauge(wfreq){
                 }
             }
         ],
-        title: "<b>Belly Button Washing Frequency</b><br/>Scrub per Week",
+        title: "<b>Belly Button Washing Frequency</b><br>Scrub per Week",
         height:500,
         width: 500,
         xaxis: {
